@@ -15,7 +15,7 @@ const int MICROFLO_MAX_PORTS = 127;
 #ifdef MICROFLO_NODE_LIMIT
 const int MICROFLO_MAX_NODES = MICROFLO_NODE_LIMIT;
 #else
-const int MICROFLO_MAX_NODES = 50;
+const int MICROFLO_MAX_NODES = 20;
 #endif
 
 
@@ -23,7 +23,7 @@ const int MICROFLO_MAX_NODES = 50;
 #ifdef MICROFLO_MESSAGE_LIMIT
 const int MICROFLO_MAX_MESSAGES = MICROFLO_MESSAGE_LIMIT;
 #else
-const int MICROFLO_MAX_MESSAGES = 50;
+const int MICROFLO_MAX_MESSAGES = 20;
 #endif
 
 // Default to enabled
