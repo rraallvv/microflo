@@ -12,6 +12,40 @@
 #include <fstream>
 #include <time.h>
 
+#ifdef __MACH__
+#include <mach/clock.h>
+#include <mach/mach.h>
+
+#define CLOCK_MONOTONIC 1
+
+static kern_return_t clock_gettime(clock_t clock_name, timespec *cur_time) {
+    if (clock_name != CLOCK_MONOTONIC) {
+        return KERN_ABORTED;
+    }
+	
+    clock_serv_t cclock;
+    mach_timespec_t mts;
+    host_name_port_t self = mach_host_self();
+	
+    if (KERN_SUCCESS != host_get_clock_service(self, SYSTEM_CLOCK, &cclock)) {
+        return KERN_FAILURE;
+    }
+	
+    if (KERN_SUCCESS != clock_get_time(cclock, &mts)) {
+        mach_port_deallocate(mach_task_self(), self);
+        return KERN_FAILURE;
+    }
+	
+    mach_port_deallocate(mach_task_self(), self);
+    mach_port_deallocate(mach_task_self(), cclock);
+    cur_time->tv_sec = mts.tv_sec;
+    cur_time->tv_nsec = mts.tv_nsec;
+	
+    return KERN_SUCCESS;
+}
+
+#endif
+
 namespace {
     static const std::string SYS_GPIO_BASE = "/sys/class/gpio/";
 
