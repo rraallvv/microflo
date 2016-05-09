@@ -68,7 +68,7 @@ Alternatively the embedding example can be built from within the micrfoflo modul
 2. Build
 
     ```
-    node microflo.js generate examples/embedding.cpp build/embedding --target linux
+    ./microflo.js generate examples/embedding.cpp build/embedding --target linux
     g++ -o build/embedding/firmware examples/embedding.cpp -std=c++11 -I./build/embedding -I./microflo
     # TODO: add a way to get include flags from MicroFlo executable
     ```
